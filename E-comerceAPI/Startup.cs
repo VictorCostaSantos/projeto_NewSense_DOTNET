@@ -1,3 +1,5 @@
+using E_comerceAPI.Src.Repositorios;
+using E_comerceAPI.Src.Repositorios.Implementacoes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +31,10 @@ namespace E_comerceAPI
 
             // Configuração de Banco de dados
             services.AddDbContext<EcomerceContexto>(opt =>opt.UseSqlServer(Configuration["ConnectionStringsDev:DefaultConnection"]));
+
+            // Repositorios
+            services.AddScoped<IProduto, ProdutoRepositorio>();
+
 
             // Controladores
             services.AddControllers();
