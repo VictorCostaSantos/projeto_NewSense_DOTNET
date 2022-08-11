@@ -16,8 +16,8 @@ namespace E_comerceAPI.Src.Modelos
         public int Id { get; set; }
         public string Produto { get; set; }
         public string Descricao { get; set; }
-        public string QtdProduto { get; set; }
-        public string QtdLimite { get; set; }
+        public int QtdProduto { get; set; }
+        public int QtdLimite { get; set; }
         public string URL_Imagem { get; set; }
 
         [JsonIgnore, InverseProperty("Produto")]

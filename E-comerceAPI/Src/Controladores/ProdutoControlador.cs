@@ -33,8 +33,9 @@ namespace E_comerceAPI.Src.Controladores
             if (lista.Count < 1) return NoContent();
             return Ok(lista);
         }
+
         [HttpGet("id/{idProduto}")]
-        public async Task<ActionResult> PegarProdutosPeloIdAsync([FromRoute] int idProduto)
+        public async Task<ActionResult> PegarProdutoPeloIdAsync([FromRoute] int idProduto)
         {
             try
             {
@@ -49,12 +50,19 @@ namespace E_comerceAPI.Src.Controladores
         [HttpPost]
         public async Task<ActionResult> NovoProdutoAsync([FromBody] Produtos produtos)
         {
-            await _repositorio.NovoProdutoAsync(produtos);
-            return Created($"api/Produtos", produtos);
+            try
+            {
+                await _repositorio.NovoProdutoAsync(produtos);
+                return Created($"api/Produtos", produtos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
         }
 
         [HttpPut]
-        public async Task<ActionResult> AtualizarProdutos([FromBody] Produtos produtos)
+        public async Task<ActionResult> AtualizarProduto([FromBody] Produtos produtos)
         {
             try
             {
@@ -67,7 +75,7 @@ namespace E_comerceAPI.Src.Controladores
             }
         }
 
-        [HttpDelete("deletar/{idProduto}")]
+        [HttpDelete("id/{idProduto}")]
         public async Task<ActionResult> DeletarProduto([FromRoute] int idProduto)
         {
             try
