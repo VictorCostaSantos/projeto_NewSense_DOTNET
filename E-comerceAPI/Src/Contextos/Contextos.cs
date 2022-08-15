@@ -12,7 +12,7 @@ public class EcomerceContexto : DbContext
     #region Atributos
 
     public DbSet<Usuario> Usuarios { get; set; }
-    public DbSet<Acao> Acao { get; set; }
+    public DbSet<Acao> Acoes { get; set; }
     public DbSet<Produto> Produtos { get; set; }
 
     #endregion

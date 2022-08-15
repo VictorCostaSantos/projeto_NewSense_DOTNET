@@ -6,8 +6,7 @@ namespace E_comerceAPI.Src.Utilidades
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CondicaoUsuario
     {
-        EmpresaDoadora,
-        PessoaDoadora,
+        DOADOR,
         ONG
     }
     [JsonConverter(typeof(JsonStringEnumConverter))]
