@@ -10,6 +10,12 @@ namespace E_comerceAPI.Src.Utilidades
         PessoaDoadora,
         ONG
     }
-
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum StatusAcao
+    {
+        Pendente,
+        Concluido,
+        Cancelado
+    }
 
 }
