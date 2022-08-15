@@ -48,7 +48,7 @@ namespace E_comerceAPI.Src.Controladores
         }
 
         [HttpPost]
-        public async Task<ActionResult> NovoProdutoAsync([FromBody] Produtos produtos)
+        public async Task<ActionResult> NovoProdutoAsync([FromBody] Produto produtos)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace E_comerceAPI.Src.Controladores
         }
 
         [HttpPut]
-        public async Task<ActionResult> AtualizarProduto([FromBody] Produtos produtos)
+        public async Task<ActionResult> AtualizarProduto([FromBody] Produto produtos)
         {
             try
             {
@@ -88,6 +88,21 @@ namespace E_comerceAPI.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
+
+        [HttpGet("id/{idUsuario}")]
+        public async Task<ActionResult> CarregarMeusProdutosEmpresaAsync(int idUsuario)
+        {
+            try
+            {
+                await _repositorio.CarregarMeusProdutosEmpresaAsync(idUsuario);
+                return Ok();// Atenção
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+    
 
         #endregion
     }
