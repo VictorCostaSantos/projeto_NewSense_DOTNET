@@ -9,6 +9,6 @@ namespace E_comerceAPI.Src.Repositorios
     {
         Task<List<Acao>> CarregarMinhasAcoesAsync(int idUsuario);
         Task NovaAcaoAsync(Acao acao);
-        Task AtualizarStatusAcaoAsync(StatusAcao novoStatus);
+        Task AtualizarStatusAcaoAsync(int idAcao, StatusAcao novoStatus);
     }
 }
