@@ -11,9 +11,9 @@ public class EcomerceContexto : DbContext
 {
     #region Atributos
 
-    public DbSet<Usuarios> Usuarios { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Acao> Acao { get; set; }
-    public DbSet<Produtos> Produtos { get; set; }
+    public DbSet<Produto> Produtos { get; set; }
 
     #endregion
 

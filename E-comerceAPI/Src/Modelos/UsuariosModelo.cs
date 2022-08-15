@@ -14,14 +14,12 @@ using System.Text.Json.Serialization;
 namespace E_comerceAPI.Src.Modelos
 {
     [Table("tb_usuarios")]
-    public class Usuarios
+    public class Usuario
     {
         #region Atributos
 
         [Key]
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Senha { get; set; }
@@ -30,8 +28,11 @@ namespace E_comerceAPI.Src.Modelos
         public string Documento { get; set; }
         public CondicaoUsuario Condicao { get; set; }
 
-        [JsonIgnore, InverseProperty("Usuario")]
-        public List<Acao> MeusProdutos { get; set; }
+        [JsonIgnore, InverseProperty("Ong")]
+        public List<Acao> MinhasDoacoes { get; set; }
+
+        [JsonIgnore, InverseProperty("Criador")]
+        public List<Produto> MeusProdutos { get; set; }
 
         #endregion
     }

@@ -28,12 +28,12 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         /// <para>Resumo: Método assíncrono para pegar todos produtos</para>
         /// </summary>
         /// <return>Lista ProdutoModelo></return>
-        public async Task<List<Produtos>> PegarTodosProdutosAsync()
+        public async Task<List<Produto>> PegarTodosProdutosAsync()
         {
              return await _contextos.Produtos.ToListAsync();
         }
 
-        public async Task<Produtos> PegarProdutoPeloIdAsync(int id)
+        public async Task<Produto> PegarProdutoPeloIdAsync(int id)
         {
             if(!ExisteId(id)) throw new Exception("Id do produto não encontrado");
             return await _contextos.Produtos.FirstOrDefaultAsync(p => p.Id == id);
@@ -47,14 +47,14 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
         }
 
-        public async Task NovoProdutoAsync(Produtos produtos)
+        public async Task NovoProdutoAsync(Produto produtos)
         {
-            if (await ExisteProduto(produtos.Produto)) throw new Exception("Produto já existente no sistema!");
+            if (await ExisteProduto(produtos.Titulo)) throw new Exception("Produto já existente no sistema!");
             if (await ExisteDescricao(produtos.Descricao)) throw new Exception("Descrição já existente no sistema!");
 
-            await _contextos.Produtos.AddAsync(new Produtos
+            await _contextos.Produtos.AddAsync(new Produto
             {
-                Produto = produtos.Produto,
+                Titulo = produtos.Titulo,
                 Descricao = produtos.Descricao,
                 QtdProduto = produtos.QtdProduto,
                 QtdLimite = produtos.QtdLimite,
@@ -63,17 +63,17 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             await _contextos.SaveChangesAsync();
         }
 
-        public async Task AtualizarProdutoAsync(Produtos produtos)
+        public async Task AtualizarProdutoAsync(Produto produto)
         {
-            if (await ExisteProduto(produtos.Produto)) throw new Exception("Produto já existente no sistema!");
-            if (await ExisteDescricao(produtos.Descricao)) throw new Exception("Descrição já existente no sistema!");
+            if (await ExisteProduto(produto.Titulo)) throw new Exception("Produto já existente no sistema!");
+            if (await ExisteDescricao(produto.Descricao)) throw new Exception("Descrição já existente no sistema!");
 
-            var auxiliar = await PegarProdutoPeloIdAsync(produtos.Id);
-            auxiliar.Produto = produtos.Produto;
-            auxiliar.Descricao = produtos.Descricao;
-            auxiliar.QtdProduto = produtos.QtdProduto;
-            auxiliar.QtdLimite = produtos.QtdLimite;
-            auxiliar.URL_Imagem = produtos.URL_Imagem;
+            var auxiliar = await PegarProdutoPeloIdAsync(produto.Id);
+            auxiliar.Titulo = produto.Titulo;
+            auxiliar.Descricao = produto.Descricao;
+            auxiliar.QtdProduto = produto.QtdProduto;
+            auxiliar.QtdLimite = produto.QtdLimite;
+            auxiliar.URL_Imagem = produto.URL_Imagem;
             _contextos.Produtos.Update(auxiliar);
             await _contextos.SaveChangesAsync();
 
@@ -86,9 +86,9 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
         }
 
-        private async Task<bool> ExisteProduto(string produto)
+        private async Task<bool> ExisteProduto(string titulo)
         {
-            var auxiliar = await _contextos.Produtos.FirstOrDefaultAsync(p => p.Produto == produto);
+            var auxiliar = await _contextos.Produtos.FirstOrDefaultAsync(p => p.Titulo == titulo);
 
             return auxiliar != null;
         }
@@ -98,6 +98,23 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             var auxiliar = await _contextos.Produtos.FirstOrDefaultAsync(p => p.Descricao == descricao);
 
             return auxiliar != null;
+        }
+
+        public async Task<List<Produto>> CarregarMeusProdutosEmpresaAsync(int idUsuario)
+        {
+            if (!ExisteUsuario(idUsuario)) throw new Exception("Id de usuario não existe!");
+
+            return await _contextos.Produtos
+                .Include(p => p.Criador)
+                .Where(p => p.Criador.Id == idUsuario)
+                .ToListAsync();
+
+            // Funções auxiliares
+            bool ExisteUsuario(int idUsuario)
+            {
+                var aux = _contextos.Usuarios.FirstOrDefault(u => u.Id == idUsuario);
+                return aux != null;
+            }
         }
 
 
