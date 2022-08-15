@@ -34,7 +34,7 @@ namespace E_comerceAPI
 
             // Repositorios
             services.AddScoped<IProduto, ProdutoRepositorio>();
-
+            services.AddScoped<IAcao, AcaoRepositorio>();
 
             // Controladores
             services.AddControllers();
