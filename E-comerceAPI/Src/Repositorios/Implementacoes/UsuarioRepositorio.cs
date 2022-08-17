@@ -23,7 +23,10 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         #endregion Atributos
 
         #region Construtores
-
+        public UsuarioRepositorio(EcomerceContexto contextos)
+        {
+            _contextos = contextos;
+        }
         public async Task<List<Usuario>> PegarTodosUsuariosAsync()
         {
             return await _contextos.Usuarios.ToListAsync();
@@ -58,6 +61,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
                 Senha = usuarios.Senha,
                 Email = usuarios.Email,
                 Endereco = usuarios.Endereco,
+                Documento = usuarios.Documento,
                 Condicao = usuarios.Condicao
             });
             await _contextos.SaveChangesAsync();
@@ -73,6 +77,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             auxiliar.Senha = usuarios.Senha;
             auxiliar.Email = usuarios.Email;
             auxiliar.Endereco = usuarios.Endereco;
+            auxiliar.Documento = usuarios.Documento;
             auxiliar.Condicao = usuarios.Condicao;
             _contextos.Usuarios.Update(auxiliar);
             await _contextos.SaveChangesAsync();
