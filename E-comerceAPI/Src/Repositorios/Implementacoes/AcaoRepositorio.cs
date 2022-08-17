@@ -84,6 +84,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
                 Ong = _contextos.Usuarios.FirstOrDefault(u => u.Id == acao.Ong.Id),
                 Produto = _contextos.Produtos.FirstOrDefault(p => p.Id == acao.Produto.Id)
             });
+            await _contextos.SaveChangesAsync();
         }
 
         // Funções auxiliares

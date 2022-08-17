@@ -13,10 +13,13 @@ namespace E_comerceAPI.Src.Controladores
     public class ProdutosControlador : ControllerBase
     {
         #region Atributos
+
         private readonly IProduto _repositorio;
+
         #endregion
 
         #region Construtores
+
         public ProdutosControlador(IProduto repositorio)
         {
             _repositorio = repositorio;
@@ -89,17 +92,17 @@ namespace E_comerceAPI.Src.Controladores
             }
         }
 
-        [HttpGet("id/{idUsuario}")]
+        [HttpGet("id/empresas/{idUsuario}")]
         public async Task<ActionResult> CarregarMeusProdutosEmpresaAsync(int idUsuario)
         {
             try
             {
-                await _repositorio.CarregarMeusProdutosEmpresaAsync(idUsuario);
-                return Ok();// Atenção
+                var list = await _repositorio.CarregarMeusProdutosEmpresaAsync(idUsuario);
+                return Ok(list);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return NotFound();
+                return NotFound(new { Mensagem = ex.Message });
             }
         }
     
