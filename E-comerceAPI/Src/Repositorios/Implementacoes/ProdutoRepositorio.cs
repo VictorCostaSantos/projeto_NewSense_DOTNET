@@ -12,6 +12,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         #region Atributos
 
         private readonly EcomerceContexto _contextos;
+
         #endregion Atributos
 
         #region Construtores
@@ -117,8 +118,8 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             }
         }
 
-
         #endregion Métodos
+
     }
 }
 
