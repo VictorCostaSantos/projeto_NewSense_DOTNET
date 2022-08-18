@@ -62,6 +62,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
                 Email = usuarios.Email,
                 Endereco = usuarios.Endereco,
                 Documento = usuarios.Documento,
+                Tipo = usuarios.Tipo,
                 Condicao = usuarios.Condicao
             });
             await _contextos.SaveChangesAsync();
@@ -102,6 +103,11 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
             return auxiliar != null;
         }
+        public async Task<Usuario> PegarUsuarioPeloEmailAsync(string email)
+        {
+            return await _contextos.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
 
     }
     #endregion

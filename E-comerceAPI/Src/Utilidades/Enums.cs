@@ -17,4 +17,12 @@ namespace E_comerceAPI.Src.Utilidades
         Cancelado
     }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum TipoUsuario
+    {
+        NORMAL,
+        ADMINISTRADOR
+    }
+
+
 }
