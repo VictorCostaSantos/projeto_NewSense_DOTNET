@@ -26,6 +26,9 @@ namespace E_comerceAPI.Src.Modelos
         public string Email { get; set; }
         public string Endereco { get; set; }
         public string Documento { get; set; }
+        [Required]
+        public TipoUsuario Tipo { get; set; }
+
         public CondicaoUsuario Condicao { get; set; }
 
         [JsonIgnore, InverseProperty("Ong")]

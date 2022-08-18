@@ -1,5 +1,6 @@
 ﻿using E_comerceAPI.Src.Modelos;
 using E_comerceAPI.Src.Repositorios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -17,14 +18,16 @@ namespace E_comerceAPI.Src.Controladores
             #region Atributos
 
             private readonly IUsuario _repositorio;
+            private readonly IAutenticacao _servicos;
 
             #endregion
 
             #region Construtores
 
-            public UsuariosControlador(IUsuario repositorio)
+            public UsuariosControlador(IUsuario repositorio, IAutenticacao servicos)
             {
                 _repositorio = repositorio;
+                _servicos = servicos;
             }
             #endregion
 
@@ -50,19 +53,38 @@ namespace E_comerceAPI.Src.Controladores
                     return NotFound(new { Mensagem = ex.Message });
                 }
             }
-            [HttpPost]
-            public async Task<ActionResult> NovoUsuarioAsync([FromBody] Usuario usuarios)
+            [HttpPost("cadastrar")]
+            [AllowAnonymous]
+            public async Task<ActionResult> NovoUsuarioAsync([FromBody] Usuario usuario)
             {
                 try
                 {
-                    await _repositorio.NovoUsuarioAsync(usuarios);
-                    return Created($"api/Usuarios", usuarios);
+                    await _servicos.CriarUsuarioSemDuplicarAsync(usuario);
+                    return Created($"api/Usuarios/email/{usuario.Email}", usuario);
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(new { Mensagem = ex.Message });
+                    return Unauthorized(ex.Message);
                 }
             }
+
+            //com erro, finalizar amanhã
+            [HttpPost("logar")]
+            [AllowAnonymous]
+            public async Task<ActionResult> LogarAsync([FromBody] Usuario usuario)
+            {
+                var auxiliar = await _repositorio.PegarUsuarioPeloEmailAsync(usuario.Email);
+                if (auxiliar == null) return Unauthorized(new
+                {
+                    Mensagem = "E-mail invalido"
+                });
+                if (auxiliar.Senha != _servicos.CodificarSenha(usuario.Senha))
+                    return Unauthorized(new { Mensagem = "Senha invalida" });
+                var token = "Bearer " + _servicos.GerarToken(auxiliar);
+                return Ok(new { Usuario = auxiliar, Token = token });
+            }
+
+
             [HttpPut]
             public async Task<ActionResult> AtualizarUsuario([FromBody] Usuario usuarios)
             {
