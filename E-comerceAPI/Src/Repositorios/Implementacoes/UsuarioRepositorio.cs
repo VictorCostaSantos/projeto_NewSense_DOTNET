@@ -68,6 +68,16 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             await _contextos.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar um usuario pelo email</para>
+        /// </summary>
+        /// <param name="email">Email do usuario</param>
+        /// <return>UsuarioModelo</return>
+        public async Task<Usuario> PegarUsuarioPeloEmailAsync(string email)
+        {
+            return await _contextos.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
         public async Task AtualizarUsuarioAsync(Usuario usuarios)
         {
             if (await ExisteUsuario(usuarios.Nome)) throw new Exception("Usuário já existente no sistema!");
@@ -103,11 +113,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
             return auxiliar != null;
         }
-        public async Task<Usuario> PegarUsuarioPeloEmailAsync(string email)
-        {
-            return await _contextos.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
-        }
-
+        
 
     }
     #endregion

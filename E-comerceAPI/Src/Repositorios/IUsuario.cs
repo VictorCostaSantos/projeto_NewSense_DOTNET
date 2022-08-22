@@ -11,6 +11,6 @@ namespace E_comerceAPI.Src.Repositorios
         Task NovoUsuarioAsync(Usuario usuarios);
         Task AtualizarUsuarioAsync(Usuario usuarios);
         Task DeletarUsuarioAsync(int id);
-        Task PegarUsuarioPeloEmailAsync(string email);
+        Task<Usuario> PegarUsuarioPeloEmailAsync(string email);
     }
 }

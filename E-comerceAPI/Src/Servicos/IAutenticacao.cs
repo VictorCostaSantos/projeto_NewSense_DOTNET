@@ -1,7 +1,7 @@
 ﻿using E_comerceAPI.Src.Modelos;
 using System.Threading.Tasks;
 
-namespace E_comerceAPI.Src.Repositorios
+namespace E_comerceAPI.Src.Servicos
 {
     /// <summary>
     /// <para>Resumo: Interface Responsavel por representar ações de autenticação</para>

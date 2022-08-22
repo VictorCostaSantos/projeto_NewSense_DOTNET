@@ -1,5 +1,6 @@
 ﻿using E_comerceAPI.Src.Modelos;
 using E_comerceAPI.Src.Repositorios;
+using E_comerceAPI.Src.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -68,7 +69,7 @@ namespace E_comerceAPI.Src.Controladores
                 }
             }
 
-            //com erro, finalizar amanhã
+            
             [HttpPost("logar")]
             [AllowAnonymous]
             public async Task<ActionResult> LogarAsync([FromBody] Usuario usuario)
