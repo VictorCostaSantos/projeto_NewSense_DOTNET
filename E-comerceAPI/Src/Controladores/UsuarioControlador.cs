@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace E_comerceAPI.Src.Controladores
 {
-    public class UsuarioControlador
-    {
-        [ApiController]
-        [Route("api/Usuarios")]
-        [Produces("application/json")]
+    [ApiController]
+    [Route("api/Usuarios")]
+    [Produces("application/json")]
 
         public class UsuariosControlador : ControllerBase
         {
@@ -99,6 +97,7 @@ namespace E_comerceAPI.Src.Controladores
                     return BadRequest(new { Mensagem = ex.Message });
                 }
             }
+
             [HttpDelete("id/{idUsuarios}")]
             public async Task<ActionResult> DeletarUsuario([FromRoute] int idUsuario)
             {
@@ -116,4 +115,3 @@ namespace E_comerceAPI.Src.Controladores
             #endregion
         }
     }
-}
