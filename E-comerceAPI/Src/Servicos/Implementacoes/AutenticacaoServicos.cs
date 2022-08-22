@@ -1,4 +1,5 @@
 ﻿using E_comerceAPI.Src.Modelos;
+using E_comerceAPI.Src.Repositorios;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -7,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_comerceAPI.Src.Repositorios.Implementacoes
+namespace E_comerceAPI.Src.Servicos.Implementacoes
 {
     /// <summary>
     /// <para>Resumo: Classe responsavel por implementar IAutenticacao</para>
@@ -22,8 +23,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         public IConfiguration Configuracao { get; }
         #endregion
         #region Construtores
-        public AutenticacaoServicos(IUsuario repositorio, IConfiguration
-        configuration)
+        public AutenticacaoServicos(IUsuario repositorio, IConfiguration configuration)
         {
             _repositorio = repositorio;
             Configuracao = configuration;
@@ -47,16 +47,20 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         public async Task CriarUsuarioSemDuplicarAsync(Usuario usuario)
         {
             var auxiliar = await _repositorio.PegarUsuarioPeloEmailAsync(usuario.Email);
+
             if (auxiliar != null) throw new Exception("Este email já está sendo utilizado");
+
             usuario.Senha = CodificarSenha(usuario.Senha);
+
             await _repositorio.NovoUsuarioAsync(usuario);
         }
+
 
         /// <summary>
         /// <para>Resumo: Método responsavel por gerar token JWT</para>
         /// </summary>
         /// <param name="usuario">Construtor de usuario que tenha parametros de e-mail e senha</param>
-/// <returns>string</returns>
+        /// <returns>string</returns>
         public string GerarToken(Usuario usuario)
         {
             var tokenManipulador = new JwtSecurityTokenHandler();

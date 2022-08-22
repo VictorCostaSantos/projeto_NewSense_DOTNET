@@ -1,5 +1,7 @@
 using E_comerceAPI.Src.Repositorios;
 using E_comerceAPI.Src.Repositorios.Implementacoes;
+using E_comerceAPI.Src.Servicos;
+using E_comerceAPI.Src.Servicos.Implementacoes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,8 +41,10 @@ namespace E_comerceAPI
             services.AddScoped<IProduto, ProdutoRepositorio>();
             services.AddScoped<IAcao, AcaoRepositorio>();
             services.AddScoped<IUsuario, UsuarioRepositorio>();
+
             // Configuração de Serviços
             services.AddScoped<IAutenticacao, AutenticacaoServicos>();
+
             // Configuração do Token Autenticação JWTBearer
             var chave = Encoding.ASCII.GetBytes(Configuration["Settings:Secret"]);
             services.AddAuthentication(a =>
@@ -77,7 +81,13 @@ namespace E_comerceAPI
             // Ambiente de produção
             contexto.Database.EnsureCreated();
             app.UseRouting();
-            app.UseAuthorization();
+
+            app.UseCors(c => c
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+           );
+
             // Autenticação e Autorização
             app.UseAuthentication();
             app.UseAuthorization();
