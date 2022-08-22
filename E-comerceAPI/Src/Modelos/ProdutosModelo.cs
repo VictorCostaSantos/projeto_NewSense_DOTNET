@@ -5,6 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace E_comerceAPI.Src.Modelos
 {
+    /// <summary>
+    /// <para> Resumo: Classe responsavel por representar tb_produtos no banco. </para>
+    /// <para>Criado por: Grupo 4</para>
+    /// <para>Versão: 1.0</para>
+    /// <para>Data: 22/08/2022</para>
+    /// </summary>
+    
     [Table("tb_produtos")]
     public class Produto
     {
