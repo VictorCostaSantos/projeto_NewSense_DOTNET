@@ -100,8 +100,8 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
             var auxiliar = await PegarUsuarioPeloIdAsync(usuarios.Id);
             auxiliar.Nome = usuarios.Nome;
-            auxiliar.Senha = usuarios.Senha;
             auxiliar.Email = usuarios.Email;
+            auxiliar.Senha = usuarios.Senha;
             auxiliar.Endereco = usuarios.Endereco;
             auxiliar.Documento = usuarios.Documento;
             auxiliar.Condicao = usuarios.Condicao;
