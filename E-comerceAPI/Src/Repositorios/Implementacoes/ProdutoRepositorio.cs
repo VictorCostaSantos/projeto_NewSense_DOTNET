@@ -7,6 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_comerceAPI.Src.Repositorios.Implementacoes
 {
+    /// <summary>
+    /// <para>Resumo: Classe responsavel por implementar IProduto</para>
+    /// <para>Criado por: Grupo 4</para>
+    /// <para>Versão: 1.0</para>
+    /// <para>Data: 22/08/2022</para>
+    /// </summary>
     public class ProdutoRepositorio : IProduto
     {
         #region Atributos
@@ -20,7 +26,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         {
             _contextos = contextos;
         }
-           
+
         #endregion Construtores
 
         #region Métodos
@@ -28,12 +34,18 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         /// <summary>
         /// <para>Resumo: Método assíncrono para pegar todos produtos</para>
         /// </summary>
-        /// <return>Lista ProdutoModelo></return>
+        /// <return>Lista Produto></return>
         public async Task<List<Produto>> PegarTodosProdutosAsync()
         {
              return await _contextos.Produtos.ToListAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar uma produto pelo Id</para>
+        /// </summary>
+        /// <param name="id">Id do produto</param>
+        /// <return>Produto</return>
+        /// <exception cref="Exception">Id do produto não pode ser nulo</exception>
         public async Task<Produto> PegarProdutoPeloIdAsync(int id)
         {
             if(!ExisteId(id)) throw new Exception("Id do produto não encontrado");
@@ -45,9 +57,14 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
                 var auxiliar = _contextos.Produtos.FirstOrDefault(p => p.Id == id);
                 return auxiliar != null;
             }
-
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para salvar novo produto</para>
+        /// </summary>
+        /// <param> 'name="produtos">Construtor para cadastrar produto</param>
+        /// <exception cref="Exception">Produto já existe</exception>
+        /// <exception cref="Exception">Descrição já existe</exception>
         public async Task NovoProdutoAsync(Produto produtos)
         {
             if (await ExisteProduto(produtos.Titulo)) throw new Exception("Produto já existente no sistema!");
@@ -64,6 +81,12 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             await _contextos.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para atualizar produto</para>
+        /// </summary>
+        /// <param> 'name="produtos">Construtor para atualizar produto</param>
+        /// <exception cref="Exception">Produto já existe</exception>
+        /// <exception cref="Exception">Descrição já existe</exception>
         public async Task AtualizarProdutoAsync(Produto produto)
         {
             if (await ExisteProduto(produto.Titulo)) throw new Exception("Produto já existente no sistema!");
@@ -77,9 +100,12 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             auxiliar.URL_Imagem = produto.URL_Imagem;
             _contextos.Produtos.Update(auxiliar);
             await _contextos.SaveChangesAsync();
-
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para deletar um produto</para>
+        /// </summary>
+        /// <param name="id">Id do produto</param>
         public async Task DeletarProdutoAsync(int id)
         {
             _contextos.Produtos.Remove(await PegarProdutoPeloIdAsync(id));
@@ -87,6 +113,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
         }
 
+        // Funções auxiliares
         private async Task<bool> ExisteProduto(string titulo)
         {
             var auxiliar = await _contextos.Produtos.FirstOrDefaultAsync(p => p.Titulo == titulo);
@@ -101,6 +128,12 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             return auxiliar != null;
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono carregar produtos</para>
+        /// </summary>
+        /// <param> 'name="idUsuario">Id do usuário</param>
+        /// <return>Lista de produtos pelo Id do usuario</return>
+        /// <exception cref="Exception">Id do usuario não pode ser nulo</exception>
         public async Task<List<Produto>> CarregarMeusProdutosEmpresaAsync(int idUsuario)
         {
             if (!ExisteUsuario(idUsuario)) throw new Exception("Id de usuario não existe!");

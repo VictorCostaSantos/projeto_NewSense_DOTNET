@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace E_comerceAPI.Src.Repositorios.Implementacoes
 {
+    /// <summary>
+    /// <para>Resumo: Classe responsavel por implementar IAcao</para>
+    /// <para>Criado por: Grupo 4</para>
+    /// <para>Versão: 1.0</para>
+    /// <para>Data: 22/08/2022</para>
+    /// </summary>
     public class AcaoRepositorio : IAcao
     {
         #region Atributos
@@ -27,6 +33,12 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
         #region Métodos
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar atualizar status da ação</para>
+        /// </summary>
+        /// <param> 'name="novoStatus">novo status</param>
+        /// <return>Status da Ação</return>
+        /// <exception cref="Exception">Id da ação pode ser nulo</exception>
         public async Task AtualizarStatusAcaoAsync(int idAcao, StatusAcao novoStatus)
         {
             var acao = _contextos.Acoes.FirstOrDefault(a => a.Id == idAcao);
@@ -43,6 +55,12 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             }
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para carregar minhas açõeso</para>
+        /// </summary>
+        /// <param> 'name="idUsuario">Id do usuário</param>
+        /// <return>Lista Ações</return>
+        /// <exception cref="Exception">Id de usuario não pode ser nulo</exception>
         public async Task<List<Acao>> CarregarMinhasAcoesAsync(int idUsuario)
         {
             var usuario = _contextos.Usuarios.FirstOrDefault(u => u.Id == idUsuario);
@@ -67,9 +85,14 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             {
                 throw new Exception("Id de Usuario não existe!");
             }
-
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para salvar uma nova ação</para>
+        /// </summary>
+        /// <param> 'name="acao">Construtor para salvar ação</param>
+        /// <exception cref="Exception">Id de ONG não pode ser nulo</exception>
+        /// <exception cref="Exception">Id do produto não pode ser nulo</exception>
         public async Task NovaAcaoAsync(Acao acao)
         {
             if (!ExisteUsuario(acao.Ong.Id)) throw new Exception("Id de ONG não existe!");

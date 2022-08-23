@@ -49,7 +49,27 @@ namespace E_comerceAPI.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
-
+        /// <summary>
+        /// Criar novo Produto
+        /// </summary>
+        /// <param name="usuario">Construtor para criar produto</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        /// POST /api/Produtos
+        /// {
+        /// "titulo": "Titulo produto",
+        /// "descricao": "Descricao do produto",
+        /// "qtdproduto": 100,
+        /// "qtdlimite": 10,
+        /// "url_imagem": "URLIMAGEM",
+        /// "criador": "fk_usuario"
+        /// }
+        ///
+        /// </remarks>
+        /// <response code="201">Retorna produto criado</response>
+        /// <response code="400">Produto nao cadastrado</response>
         [HttpPost]
         public async Task<ActionResult> NovoProdutoAsync([FromBody] Produto produtos)
         {
@@ -105,9 +125,8 @@ namespace E_comerceAPI.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
-    
 
         #endregion
-    }
 
+    }
 }

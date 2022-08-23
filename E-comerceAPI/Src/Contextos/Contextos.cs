@@ -23,5 +23,7 @@ public class EcomerceContexto : DbContext
     {
 
     }
+
     #endregion
+
 }
