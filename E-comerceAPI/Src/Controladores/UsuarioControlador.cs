@@ -51,7 +51,7 @@ namespace E_comerceAPI.Src.Controladores
         /// <summary>
         /// Pegar usuario pelo Id
         /// </summary>
-        /// <param name="usuario">Busca de usuario pelo Id</param>
+        /// <param name="idUsuario">Busca de usuario pelo Id</param>
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna o usuario</response>
         /// <response code="404">Email não existente</response>
@@ -137,10 +137,11 @@ namespace E_comerceAPI.Src.Controladores
             return Ok(new { Usuario = auxiliar, Token = token });
         }
 
-        /// </summary>
+
+        /// <summary>
         /// Atualizar usuario pelo Id
         /// </summary>
-        /// <param name="usuario">Construtor para criar usuario</param>
+        /// <param name="usuarios">Construtor para criar usuario</param>
         /// <returns>ActionResult</returns>
         /// <remarks>
         /// Exemplo de requisição:
