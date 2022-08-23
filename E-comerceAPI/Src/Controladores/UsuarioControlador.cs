@@ -33,6 +33,13 @@ namespace E_comerceAPI.Src.Controladores
 
         #region Métodos
 
+        /// <summary>
+        /// Pegar todos usuarios
+        /// </summary>
+        /// <param name="usuarios">Busca todos usuarios</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna usuarios</response>
+        /// <response code="404">Usuarios não existem</response>
         [HttpGet]
         public async Task<ActionResult> PegarTodosUsuariosAsync()
         {
@@ -40,6 +47,7 @@ namespace E_comerceAPI.Src.Controladores
             if (lista.Count < 1) return NoContent();
             return Ok(lista);
         }
+
         /// <summary>
         /// Pegar usuario pelo Id
         /// </summary>
@@ -47,7 +55,6 @@ namespace E_comerceAPI.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna o usuario</response>
         /// <response code="404">Email não existente</response>
-
         [HttpGet("id/{idUsuario}")]
         public async Task<ActionResult> PegarUsuarioPeloIdAsync([FromRoute] int idUsuario)
         {
@@ -60,6 +67,7 @@ namespace E_comerceAPI.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
+
         /// <summary>
         /// Criar novo Usuario
         /// </summary>
@@ -68,7 +76,7 @@ namespace E_comerceAPI.Src.Controladores
         /// <remarks>
         /// Exemplo de requisição:
         ///
-        /// POST /api/Usuarios/cadastrar
+        /// POST /api/Usuarios
         /// {
         /// "nome": "Nome Sobrenome",
         /// "email": "usuario@domain.com",
@@ -129,6 +137,7 @@ namespace E_comerceAPI.Src.Controladores
             return Ok(new { Usuario = auxiliar, Token = token });
         }
 
+        /// </summary>
         /// Atualizar usuario pelo Id
         /// </summary>
         /// <param name="usuario">Construtor para criar usuario</param>
