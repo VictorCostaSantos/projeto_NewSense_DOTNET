@@ -103,7 +103,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             {
                 DataAcao = DateTime.Now,
                 QtdAcao = acao.QtdAcao,
-                Status = StatusAcao.Pendente,
+                Status = StatusAcao.PENDENTE,
                 Ong = _contextos.Usuarios.FirstOrDefault(u => u.Id == acao.Ong.Id),
                 Produto = _contextos.Produtos.FirstOrDefault(p => p.Id == acao.Produto.Id)
             });
