@@ -82,6 +82,7 @@ namespace E_comerceAPI.Src.Controladores
         /// "criador": { 
         ///     "Id": n°
         /// }
+        /// }
         ///
         /// </remarks>
         /// <response code="201">Retorna produto criado</response>
