@@ -28,6 +28,7 @@ namespace E_comerceAPI.Src.Controladores
                 _repositorio = repositorio;
                 _servicos = servicos;
             }
+
             #endregion
 
             #region Métodos
@@ -52,6 +53,7 @@ namespace E_comerceAPI.Src.Controladores
                     return NotFound(new { Mensagem = ex.Message });
                 }
             }
+
             [HttpPost("cadastrar")]
             [AllowAnonymous]
             public async Task<ActionResult> NovoUsuarioAsync([FromBody] Usuario usuario)
@@ -66,7 +68,6 @@ namespace E_comerceAPI.Src.Controladores
                     return Unauthorized(ex.Message);
                 }
             }
-
             
             [HttpPost("logar")]
             [AllowAnonymous]
@@ -82,7 +83,6 @@ namespace E_comerceAPI.Src.Controladores
                 var token = "Bearer " + _servicos.GerarToken(auxiliar);
                 return Ok(new { Usuario = auxiliar, Token = token });
             }
-
 
             [HttpPut]
             public async Task<ActionResult> AtualizarUsuario([FromBody] Usuario usuarios)
@@ -113,5 +113,6 @@ namespace E_comerceAPI.Src.Controladores
             }
             
             #endregion
+
         }
-    }
+}

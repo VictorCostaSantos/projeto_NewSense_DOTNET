@@ -105,9 +105,8 @@ namespace E_comerceAPI.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
-    
 
         #endregion
-    }
 
+    }
 }
