@@ -29,6 +29,13 @@ namespace E_comerceAPI.Src.Controladores
 
         #region Métodos
 
+        /// <summary>
+        /// Pegar Todos os Produtos
+        /// </summary>
+        /// <param name="produtos">Todos os Produtos</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Todos produtos</response>
+        /// <response code="404">Produtos não encotrados</response>
         [HttpGet]
         public async Task<ActionResult> PegarTodosProdutosAsync()
         {
@@ -37,6 +44,13 @@ namespace E_comerceAPI.Src.Controladores
             return Ok(lista);
         }
 
+        /// <summary>
+        /// Pegar Produto Pelo Id
+        /// </summary>
+        /// <param name="idProduto">Id do Produto</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna produto pelo Id</response>
+        /// <response code="404">Id do produto não pode ser nulo</response>
         [HttpGet("id/{idProduto}")]
         public async Task<ActionResult> PegarProdutoPeloIdAsync([FromRoute] int idProduto)
         {
@@ -49,10 +63,11 @@ namespace E_comerceAPI.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
+
         /// <summary>
         /// Criar novo Produto
         /// </summary>
-        /// <param name="usuario">Construtor para criar produto</param>
+        /// <param name="produtos">Construtor para criar produto</param>
         /// <returns>ActionResult</returns>
         /// <remarks>
         /// Exemplo de requisição:
@@ -64,7 +79,8 @@ namespace E_comerceAPI.Src.Controladores
         /// "qtdproduto": 100,
         /// "qtdlimite": 10,
         /// "url_imagem": "URLIMAGEM",
-        /// "criador": "fk_usuario"
+        /// "criador": { 
+        ///     "Id": n°
         /// }
         ///
         /// </remarks>
@@ -84,6 +100,29 @@ namespace E_comerceAPI.Src.Controladores
             }
         }
 
+        /// <summary>
+        /// Atualizar produto
+        /// </summary>
+        /// <param name="produtos">Construtor para atualizar produto</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        /// PUT /api/Produtos
+        /// {
+        /// "id": n°,
+        /// "nome": "Nome Sobrenome",
+        /// "email": "usuario@domain.com",
+        /// "senha": "134652",
+        /// "endereco": "Rua do usuario, 100",
+        /// "documento": "44444444444",
+        /// "tipo": "NORMAL",
+        /// "condicao": "DOADOR"
+        /// }
+        ///
+        /// </remarks>
+        /// <response code="200">Retorna produto atualizado</response>
+        /// <response code="400">Produto nao localizado</response>
         [HttpPut]
         public async Task<ActionResult> AtualizarProduto([FromBody] Produto produtos)
         {
@@ -98,6 +137,22 @@ namespace E_comerceAPI.Src.Controladores
             }
         }
 
+        /// <summary>
+        /// Deletar Produto
+        /// </summary>
+        /// <param name="idProduto">Deletar produto pelo Id</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        /// DELETE /api/Produtos
+        /// {
+        /// "Id": "valor do Id",
+        /// }
+        ///
+        /// </remarks>
+        /// <response code="201">Retorna confirmação de produto deletado</response>
+        /// <response code="401">Id não encontrado</response>
         [HttpDelete("id/{idProduto}")]
         public async Task<ActionResult> DeletarProduto([FromRoute] int idProduto)
         {
@@ -112,6 +167,13 @@ namespace E_comerceAPI.Src.Controladores
             }
         }
 
+        /// <summary>
+        /// Carregar produtos pelo Id
+        /// </summary>
+        /// <param name="idUsuario">Carregar meus produtos pelo Id</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna lista de produtos pelo Id do usuario</response>
+        /// <response code="404">Id não existente</response>
         [HttpGet("id/empresas/{idUsuario}")]
         public async Task<ActionResult> CarregarMeusProdutosEmpresaAsync(int idUsuario)
         {
