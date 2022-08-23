@@ -14,7 +14,9 @@ namespace E_comerceAPI.Src.Controladores
     public class AcaoControlador : ControllerBase
     {
         #region Atributos
+
         private readonly IAcao _repositorio;
+
         #endregion
 
         #region Construtores
@@ -22,9 +24,11 @@ namespace E_comerceAPI.Src.Controladores
         {
             _repositorio = repositorio;
         }
+
         #endregion
 
         #region Métodos
+
         [HttpGet]
         public async Task<ActionResult> CarregarMinhasAcoesAsync(int idUsuario)
         {
@@ -64,5 +68,4 @@ namespace E_comerceAPI.Src.Controladores
         #endregion
 
     }
-
 }

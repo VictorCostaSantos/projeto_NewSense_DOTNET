@@ -9,11 +9,10 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 {
     /// <summary>
     /// <para>Resumo: Classe responsavel por implementar IUsuario</para>
-    /// <para>Criado por: grupo 4</para>
+    /// <para>Criado por: Grupo 4</para>
     /// <para>Versão: 1.0</para>
-    /// <para>Data: 17/08/2022</para>
+    /// <para>Data: 22/08/2022</para>
     /// </summary>
-
     public class UsuarioRepositorio : IUsuario
     {
         #region Atributos
@@ -34,10 +33,13 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         #endregion
 
         #region Métodos
+
         /// <summary>
-        /// <para>Resumo: Método assíncrono para pegar todos Usuarios</para>
+        /// <para>Resumo: Método assíncrono pegar usuário pelo Id</para>
         /// </summary>
-        /// <return>Lista ProdutoModelo></return>
+        /// <param> 'name="idUsuario">Id do usuário</param>
+        /// <return>Usuario pelo Id</return>
+        /// <exception cref="Exception">Id do usuario não pode ser nulo</exception>
         public async Task<Usuario> PegarUsuarioPeloIdAsync(int id)
         {
             if (!ExisteId(id)) throw new Exception("Id do usuario não encontrado");
@@ -50,6 +52,13 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
                 return auxiliar != null;
             }
         }
+
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para salvar novo usário</para>
+        /// </summary>
+        /// <param> 'name="usuarios">Construtor para cadastrar usuário</param>
+        /// <exception cref="Exception">Usuário já existe</exception>
+        /// <exception cref="Exception">Email já existe</exception>
         public async Task NovoUsuarioAsync(Usuario usuarios)
         {
             if (await ExisteUsuario(usuarios.Nome)) throw new Exception("Usuário já existente no sistema!");
@@ -72,12 +81,18 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         /// <para>Resumo: Método assíncrono para pegar um usuario pelo email</para>
         /// </summary>
         /// <param name="email">Email do usuario</param>
-        /// <return>UsuarioModelo</return>
+        /// <return>Usuario</return>
         public async Task<Usuario> PegarUsuarioPeloEmailAsync(string email)
         {
             return await _contextos.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para atualizar usuário</para>
+        /// </summary>
+        /// <param> 'name="usuarios">Construtor para atualizar usuário</param>
+        /// <exception cref="Exception">Usuário já existe</exception>
+        /// <exception cref="Exception">Email já existe</exception>
         public async Task AtualizarUsuarioAsync(Usuario usuarios)
         {
             if (await ExisteUsuario(usuarios.Nome)) throw new Exception("Usuário já existente no sistema!");
@@ -92,14 +107,19 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             auxiliar.Condicao = usuarios.Condicao;
             _contextos.Usuarios.Update(auxiliar);
             await _contextos.SaveChangesAsync();
-
         }
+
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para deletar um usuário</para>
+        /// </summary>
+        /// <param name="id">Id do usuário</param>
         public async Task DeletarUsuarioAsync(int id)
         {
             _contextos.Usuarios.Remove(await PegarUsuarioPeloIdAsync(id));
             await _contextos.SaveChangesAsync();
-
         }
+
+        // Funções auxiliares
         private async Task<bool> ExisteUsuario(string nome)
         {
             var auxiliar = await _contextos.Usuarios.FirstOrDefaultAsync(u => u.Nome == nome);
@@ -113,9 +133,8 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
             return auxiliar != null;
         }
-        
-
     }
+
     #endregion
 
 }

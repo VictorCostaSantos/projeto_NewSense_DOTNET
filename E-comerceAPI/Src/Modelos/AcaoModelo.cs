@@ -22,7 +22,7 @@ namespace E_comerceAPI.Src.Modelos
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; } 
         public DateTime DataAcao { get; set; }
-        public string QtdAcao { get; set; }
+        public int QtdAcao { get; set; }
         public StatusAcao Status { get; set; }
 
         [ForeignKey("FK_Usuario")]
