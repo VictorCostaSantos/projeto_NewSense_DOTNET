@@ -37,7 +37,12 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         /// <return>Lista Produto></return>
         public async Task<List<Produto>> PegarTodosProdutosAsync()
         {
-             return await _contextos.Produtos.ToListAsync();
+             return await _contextos
+                .Produtos
+                .Include(p => p.Criador)
+                .Include(p => p.Acoes)
+                .ToListAsync();
+ 
         }
 
         /// <summary>
@@ -67,16 +72,14 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         /// <exception cref="Exception">Descrição já existe</exception>
         public async Task NovoProdutoAsync(Produto produtos)
         {
-            if (await ExisteProduto(produtos.Titulo)) throw new Exception("Produto já existente no sistema!");
-            if (await ExisteDescricao(produtos.Descricao)) throw new Exception("Descrição já existente no sistema!");
-
             await _contextos.Produtos.AddAsync(new Produto
             {
                 Titulo = produtos.Titulo,
                 Descricao = produtos.Descricao,
                 QtdProduto = produtos.QtdProduto,
                 QtdLimite = produtos.QtdLimite,
-                URL_Imagem =produtos.URL_Imagem
+                URL_Imagem =produtos.URL_Imagem,
+                Criador = _contextos.Usuarios.FirstOrDefault(u => u.Id == produtos.Criador.Id)
             });
             await _contextos.SaveChangesAsync();
         }
@@ -89,9 +92,6 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
         /// <exception cref="Exception">Descrição já existe</exception>
         public async Task AtualizarProdutoAsync(Produto produto)
         {
-            if (await ExisteProduto(produto.Titulo)) throw new Exception("Produto já existente no sistema!");
-            if (await ExisteDescricao(produto.Descricao)) throw new Exception("Descrição já existente no sistema!");
-
             var auxiliar = await PegarProdutoPeloIdAsync(produto.Id);
             auxiliar.Titulo = produto.Titulo;
             auxiliar.Descricao = produto.Descricao;
