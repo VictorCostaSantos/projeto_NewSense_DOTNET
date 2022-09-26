@@ -181,7 +181,7 @@ namespace E_comerceAPI.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="204">Retorna o usuario</response>
         /// <response code="404">Email não existente</response>
-        [HttpDelete("id/{idUsuarios}")]
+        [HttpDelete("id/{idUsuario}")]
         public async Task<ActionResult> DeletarUsuario([FromRoute] int idUsuario)
         {
             try
