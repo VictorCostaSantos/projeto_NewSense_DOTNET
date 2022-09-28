@@ -161,12 +161,12 @@ namespace E_comerceAPI.Src.Controladores
         /// <response code="200">Retorna usuario atualizado</response>
         /// <response code="400">Usuario nao localizado</response>
         [HttpPut]
-        public async Task<ActionResult> AtualizarUsuario([FromBody] Usuario usuarios)
+        public async Task<ActionResult> AtualizarUsuario([FromBody] Usuario usuario)
         {
             try
             {
-                await _repositorio.AtualizarUsuarioAsync(usuarios);
-                return Ok(usuarios);
+                await _repositorio.AtualizarUsuarioAsync(usuario);
+                return Ok(usuario);
             }
             catch (Exception ex)
             {
@@ -181,7 +181,7 @@ namespace E_comerceAPI.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="204">Retorna o usuario</response>
         /// <response code="404">Email não existente</response>
-        [HttpDelete("id/{idUsuarios}")]
+        [HttpDelete("id/{idUsuario}")]
         public async Task<ActionResult> DeletarUsuario([FromRoute] int idUsuario)
         {
             try

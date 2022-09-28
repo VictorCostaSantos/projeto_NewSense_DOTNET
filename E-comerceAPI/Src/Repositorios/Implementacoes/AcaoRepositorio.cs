@@ -72,11 +72,13 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
                     case CondicaoUsuario.DOADOR:
                         return await _contextos.Acoes
                             .Include(a => a.Produto)
+                            .Include(a => a.Ong)
                             .Where(a => a.Produto.Criador.Id == idUsuario)
                             .ToListAsync();
                     default:
                         return await _contextos.Acoes
                             .Include(a => a.Produto)
+                            .Include(a => a.Produto.Criador)
                             .Where(a => a.Ong.Id == idUsuario)
                             .ToListAsync();
                 }
