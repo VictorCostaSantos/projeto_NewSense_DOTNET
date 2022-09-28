@@ -17,9 +17,9 @@ namespace E_comerceAPI.Src.Utilidades
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum StatusAcao
     {
-        Pendente,
-        Concluido,
-        Cancelado
+        PENDENTE,
+        CONCLUIDO,
+        CANCELADO
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]

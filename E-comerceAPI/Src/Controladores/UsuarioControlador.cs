@@ -33,6 +33,13 @@ namespace E_comerceAPI.Src.Controladores
 
         #region Métodos
 
+        /// <summary>
+        /// Pegar todos usuarios
+        /// </summary>
+        /// <param name="usuarios">Busca todos usuarios</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna usuarios</response>
+        /// <response code="404">Usuarios não existem</response>
         [HttpGet]
         public async Task<ActionResult> PegarTodosUsuariosAsync()
         {
@@ -40,14 +47,14 @@ namespace E_comerceAPI.Src.Controladores
             if (lista.Count < 1) return NoContent();
             return Ok(lista);
         }
+
         /// <summary>
         /// Pegar usuario pelo Id
         /// </summary>
-        /// <param name="usuario">Busca de usuario pelo Id</param>
+        /// <param name="idUsuario">Busca de usuario pelo Id</param>
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna o usuario</response>
         /// <response code="404">Email não existente</response>
-
         [HttpGet("id/{idUsuario}")]
         public async Task<ActionResult> PegarUsuarioPeloIdAsync([FromRoute] int idUsuario)
         {
@@ -60,6 +67,7 @@ namespace E_comerceAPI.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
+
         /// <summary>
         /// Criar novo Usuario
         /// </summary>
@@ -68,7 +76,7 @@ namespace E_comerceAPI.Src.Controladores
         /// <remarks>
         /// Exemplo de requisição:
         ///
-        /// POST /api/Usuarios/cadastrar
+        /// POST /api/Usuarios
         /// {
         /// "nome": "Nome Sobrenome",
         /// "email": "usuario@domain.com",
@@ -129,9 +137,11 @@ namespace E_comerceAPI.Src.Controladores
             return Ok(new { Usuario = auxiliar, Token = token });
         }
 
+
+        /// <summary>
         /// Atualizar usuario pelo Id
         /// </summary>
-        /// <param name="usuario">Construtor para criar usuario</param>
+        /// <param name="usuarios">Construtor para criar usuario</param>
         /// <returns>ActionResult</returns>
         /// <remarks>
         /// Exemplo de requisição:
@@ -151,12 +161,12 @@ namespace E_comerceAPI.Src.Controladores
         /// <response code="200">Retorna usuario atualizado</response>
         /// <response code="400">Usuario nao localizado</response>
         [HttpPut]
-        public async Task<ActionResult> AtualizarUsuario([FromBody] Usuario usuarios)
+        public async Task<ActionResult> AtualizarUsuario([FromBody] Usuario usuario)
         {
             try
             {
-                await _repositorio.AtualizarUsuarioAsync(usuarios);
-                return Ok(usuarios);
+                await _repositorio.AtualizarUsuarioAsync(usuario);
+                return Ok(usuario);
             }
             catch (Exception ex)
             {
@@ -171,7 +181,7 @@ namespace E_comerceAPI.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="204">Retorna o usuario</response>
         /// <response code="404">Email não existente</response>
-        [HttpDelete("id/{idUsuarios}")]
+        [HttpDelete("id/{idUsuario}")]
         public async Task<ActionResult> DeletarUsuario([FromRoute] int idUsuario)
         {
             try

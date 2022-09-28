@@ -72,11 +72,13 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
                     case CondicaoUsuario.DOADOR:
                         return await _contextos.Acoes
                             .Include(a => a.Produto)
+                            .Include(a => a.Ong)
                             .Where(a => a.Produto.Criador.Id == idUsuario)
                             .ToListAsync();
                     default:
                         return await _contextos.Acoes
                             .Include(a => a.Produto)
+                            .Include(a => a.Produto.Criador)
                             .Where(a => a.Ong.Id == idUsuario)
                             .ToListAsync();
                 }
@@ -103,7 +105,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             {
                 DataAcao = DateTime.Now,
                 QtdAcao = acao.QtdAcao,
-                Status = StatusAcao.Pendente,
+                Status = StatusAcao.PENDENTE,
                 Ong = _contextos.Usuarios.FirstOrDefault(u => u.Id == acao.Ong.Id),
                 Produto = _contextos.Produtos.FirstOrDefault(p => p.Id == acao.Produto.Id)
             });

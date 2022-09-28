@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace E_comerceAPI.Src.Repositorios.Implementacoes
@@ -101,7 +102,7 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
             var auxiliar = await PegarUsuarioPeloIdAsync(usuarios.Id);
             auxiliar.Nome = usuarios.Nome;
             auxiliar.Email = usuarios.Email;
-            auxiliar.Senha = usuarios.Senha;
+            auxiliar.Senha = CodificarSenha(usuarios.Senha);
             auxiliar.Endereco = usuarios.Endereco;
             auxiliar.Documento = usuarios.Documento;
             auxiliar.Condicao = usuarios.Condicao;
@@ -133,7 +134,14 @@ namespace E_comerceAPI.Src.Repositorios.Implementacoes
 
             return auxiliar != null;
         }
+        //chamando codificar senha para atualizar o usuário
+        public string CodificarSenha(string senha)
+        {
+            var bytes = Encoding.UTF8.GetBytes(senha);
+            return Convert.ToBase64String(bytes);
+        }
     }
+    
 
     #endregion
 

@@ -35,15 +35,32 @@ namespace E_comerceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            // Configuração Banco de Dados
+            if (Configuration["Enviroment:Start"] == "PROD")
+            {
+                services.AddEntityFrameworkNpgsql()
+                .AddDbContext<EcomerceContexto>(
+                opt =>
+                opt.UseNpgsql(Configuration["ConnectionStringsProd:DefaultConnection"]));
+            }
+            else
+            {
+                services.AddDbContext<EcomerceContexto>(
+                opt =>
+                opt.UseSqlServer(Configuration["ConnectionStringsDev:DefaultConnection"]));
+            }
 
             // Configuração de Banco de dados
-            services.AddDbContext<EcomerceContexto>(opt => opt.UseSqlServer(Configuration["ConnectionStringsDev:DefaultConnection"]));
+            //services.AddDbContext<EcomerceContexto>(opt => opt.UseSqlServer(Configuration["ConnectionStringsDev:DefaultConnection"]));
 
-            // Repositorios
+            // Configuração Repositorios
             services.AddScoped<IProduto, ProdutoRepositorio>();
             services.AddScoped<IAcao, AcaoRepositorio>();
             services.AddScoped<IUsuario, UsuarioRepositorio>();
+
+            // Configuração de Controladores
+            services.AddCors();
+            services.AddControllers();
 
             // Configuração de Serviços
             services.AddScoped<IAutenticacao, AutenticacaoServicos>();
@@ -113,9 +130,6 @@ namespace E_comerceAPI
                 s.IncludeXmlComments(xmlPath);
             }
         );
-
-            // Controladores
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -135,6 +149,15 @@ namespace E_comerceAPI
 
             // Ambiente de produção
             contexto.Database.EnsureCreated();
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NewSense v1");
+                c.RoutePrefix = string.Empty;
+            });
+
+
+            // Rotas
             app.UseRouting();
 
             app.UseCors(c => c
